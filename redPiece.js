@@ -1,4 +1,4 @@
-class redPiece{
+class RedPiece{
     constructor(x, y, width, height){
         var rectOptions = {
             friction: 0,

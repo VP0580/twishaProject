@@ -1,4 +1,4 @@
-class bluePiece{
+class BluePiece{
     constructor(x, y, width, height){
         var rectOptions = {
             friction: 0,

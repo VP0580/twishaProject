@@ -218,7 +218,7 @@ function setup() {
   engine.world.gravity.y = 0;
 
   //create the die array
-  die = [false, 1, 0, false, 0,true];
+  die = [false, 1, 0, false, 0,false];
   //item 0 = if die is rolling
   //item 1 = current number displayed
   //item 2 = times to die will change
@@ -227,14 +227,14 @@ function setup() {
   //red or blue...true means red is moving
 
   //create the pieces
-  bluePiece = new bluePiece(20, 628, 40, 40);
+  bluePiece = new BluePiece(20, 628, 40, 40);
   blueSpaces = 0;
   blueMoved = false;
 
-  redPiece = new redPiece(30, 600, 40, 40);
-  redSpaces = 0;
+  redPiece = new RedPiece(20, 600, 40, 40);
+  redSpaces = 1;
   redMoved = true;
-  console.log("value when red is moving is " +die[5])
+  console.log("value when red is moving is " )
 }
 
 function draw() {
@@ -256,9 +256,10 @@ function draw() {
   strokeWeight(8);
   
   line(0, 602.5, 600, 602.5);
-
+ if(die[5]===false)
+ {
   //draw die or make it blink or move it
-  if(die[3] === false){
+  if(die[3] === false ){
     drawDie(525, 665, die[1]);
   }else{
     if(die[4] % 2 === 0){
@@ -278,6 +279,7 @@ function draw() {
         blueMoved = true;
         blueSpaces++;
         console.log(blueSpaces);
+       
       }
     }
    
@@ -289,18 +291,23 @@ function draw() {
         die[3] = false;
         die[0] = false;
         checkForBlueUpsAndDowns();
+       
       }
     }
-  
+   
   }
+  die[5]=true; 
+}
 
+  
+  if(die[5]===true){
   // red movement
-  if(die[3] === false && die[5]=== true){
+  if(die[3] === true ){
     drawDie(525, 665, die[1]);
   }else{
-    if(die[4] % 2 === 0 && die[5]===true){
+    if(die[4] % 2 === 0){
       drawDie(525, 665, die[1]);
-
+       
       if(redMoved === true && redSpaces !== 100){
         if(redSpaces % 10 === 0){
           redPiece.moveUp();
@@ -322,43 +329,21 @@ function draw() {
    
     if(frameCount % 15 === 0){
       die[4]--;
-      blueMoved = false;
+      redMoved =false;
 
       if(die[4] === 0){
-        die[3] = false;
+        die[3] =false;
         die[0] = false;
         checkForRedUpsAndDowns();
-         
+        
       }
     }
+   
   }
+  die[5]=false;
+}
 
-  // red movement
-  if(die[3] === false && die[5]=== true){
-    drawDie(525, 665, die[1]);
-  }else{
-    if(die[4] % 2 === 0 && die[5]===true){
-      drawDie(525, 665, die[1]);
-
-      if(redMoved === true && redSpaces !== 100){
-        if(redSpaces % 10 === 0){
-          redPiece.moveUp();
-        }else{
-          var num = Math.floor(redSpaces / 10);
-          console.log("value of num in red space is" + num)
-          if(num === 0 || num === 2 || num === 4 || num === 6 || num === 8){
-           redPiece.moveRight();
-          }else{
-           redPiece.moveLeft();
-          }
-        }
-        redMoved =false;
-        redSpaces++;
-        console.log(redSpaces);
-       
-      }
-    }
-  }
+  
 
    
     
@@ -377,13 +362,13 @@ function draw() {
       die[4] = die[1] * 2;
     }
   }
+
+
+
+  
 }
-
-
   
-
-  
-  function keyPressed(){
+function keyPressed(){
   if (keyCode === 32 && die[0] === false) {
     die[0] = true;
     die[2] = round(random(12, 18));
